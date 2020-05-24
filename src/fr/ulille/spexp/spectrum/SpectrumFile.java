@@ -32,6 +32,8 @@ public class SpectrumFile {
     protected double ydOffset;
     protected double fStep;
     protected String fileName;
+    private List<Double> xdataList;
+    private List<Double> ydataList;
 
     public void scaleData(){
         double dmin = yData[xaLimit];
@@ -262,36 +264,65 @@ public class SpectrumFile {
 
             //FileInfo info = new FileInfo(fileName);
 
+            xdataList = new ArrayList<>();
+            ydataList = new ArrayList<>();
+
             // we determine the number of points to read
 	        fileRead = false;
 	    	BufferedReader inputStream = new BufferedReader(new FileReader(fileName));
 	        String line;
             line = inputStream.readLine(); // read header line
+
+            double[] xy = new double[2];
 	        while (line != null)           // read all other lines
 	        {
 	           line = inputStream.readLine();
-                   if (line!=null) inputList.add(line);
+	           //if (line!=null) inputList.add(line);
+	           if (line!=null&&!line.isEmpty()){
+	               splitString(line,xy);
+                   xdataList.add(xy[0]);
+                   ydataList.add(xy[1]);
+                   if (xy[1]<YMin) YMin = xy[1];
+                   if (xy[1]>YMax) YMax = xy[1];
+               }
 	        }
-	        dataPoints = inputList.size();
+	        //dataPoints = inputList.size();
 	        inputStream.close();
 	        // now we allocate memory for the data to be read
-	        xData = new double[dataPoints];
-	        yData = new double[dataPoints];
+	        //xData = new double[dataPoints];
+	        //yData = new double[dataPoints];
                 
-	        double[] xy = new double[2];
-	        for (int i=0;i<dataPoints;i++){
-	            if (!inputList.get(i).isEmpty())
-	                splitString(inputList.get(i),xy);
-	            xData[i] = xy[0];
-	            yData[i] = xy[1];
-	            if (yData[i]>YMax) YMax = yData[i];
-	            if (yData[i]<YMin) YMin = yData[i];                    
-	        }
+
+	        /*for (int i=0;i<dataPoints;i++){
+	            if (!inputList.get(i).isEmpty()) splitString(inputList.get(i),xy);
+	            //xData[i] = xy[0];
+	            //yData[i] = xy[1];
+	            //if (yData[i]>YMax) YMax = yData[i];
+	            //if (yData[i]<YMin) YMin = yData[i];
+                xdataList.add(xy[0]);
+                ydataList.add(xy[1]);
+	        }*/
 
 	        inputList.clear();
 	        fileRead = true;
 	        this.fileName = fileName;
-	        freqMin = xData[0];
+
+	        //YMax = ydataList.stream().max(Double::compare).get();
+	        //YMin = ydataList.stream().min(Double::compare).get();
+	        freqMin = xdataList.get(0);
+	        freqMax = xdataList.get(xdataList.size()-1);
+	        fStep = (freqMax-freqMin)/(xdataList.size()-1);
+            xaLimit = 0;
+            xbLimit = xdataList.size()-1;
+            ycLimit = YMin-0.05*(YMax-YMin);
+            ydLimit = YMax+0.05*(YMax-YMin);
+            iniyc = ycLimit;
+            iniyd = ydLimit;
+            xData = xdataList.stream().mapToDouble(Double::doubleValue).toArray();
+            yData = ydataList.stream().mapToDouble(Double::doubleValue).toArray();
+            dataPoints = xData.length;
+
+	        /*freqMin = xData[0];
 	        freqMax = xData[dataPoints-1];
 	        fStep = (xData[dataPoints - 1]-xData[0])/(dataPoints - 1);
 	        xaLimit = 0;
@@ -299,7 +330,7 @@ public class SpectrumFile {
 	        ycLimit = YMin-0.05*(YMax-YMin);
 	        ydLimit = YMax+0.05*(YMax-YMin);
 	        iniyc = ycLimit;
-	        iniyd = ydLimit;
+	        iniyd = ydLimit;*/
         }
         catch(FileNotFoundException e){
             System.out.println("File "+fileName+" was not found");

@@ -1,6 +1,5 @@
 package fr.ulille.spexp.fx;
 
-import com.sun.javafx.geom.BaseBounds;
 import fr.ulille.spexp.compiler.MiscData;
 import fr.ulille.spexp.data.*;
 import fr.ulille.spexp.math.VoigtFunctionInt;
@@ -22,7 +21,6 @@ import javafx.scene.text.*;
 import org.controlsfx.control.StatusBar;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -478,7 +476,7 @@ public class WorkPane extends SplitPane {
                 dxvalue = 0.0;
             }
             labelXY.setText(String.format(Locale.US,
-                    "X : %10.3f | Y : %.4E | ∆ : %.4E",
+                    "X : %10.3f | Y : %.3E | ∆ : %.3E",
                     xvalue, yvalue, dxvalue));
         }
 

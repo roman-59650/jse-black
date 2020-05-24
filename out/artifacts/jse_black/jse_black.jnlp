@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="jse_black.jnlp">
+  <information>
+    <title>jse-black</title>
+    <vendor>Unknown</vendor>
+    <description>jse-black</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="jse_black.jar" size="296425" download="eager" />
+    <jar href="lib/commons-io-2.6.jar" size="214788" download="eager" />
+    <jar href="lib/commons-math3-3.6.1.jar" size="2213560" download="eager" />
+    <jar href="lib/controlsfx-8.40.15.jar" size="1402490" download="eager" />
+    <jar href="lib/derby.jar" size="2635657" download="eager" />
+    <jar href="lib/jtransforms-2.3.jar" size="469892" download="eager" />
+    <jar href="lib/jtransforms-3.1.jar" size="1501730" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="fr.ulille.spexp.fx.Main"  name="jse-black" />
+  <update check="background"/>
+</jnlp>

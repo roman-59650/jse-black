@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="appane" style="-fx-background-color: lime;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.ulille.spexp.fx.AssignedPeakDialog">
+   <children>
+      <MenuButton id="mbutt" fx:id="menuButton" layoutX="226.0" layoutY="79.0" maxHeight="22.0" maxWidth="22.0" minHeight="22.0" minWidth="22.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" rotate="-90.0" style="-fx-border-color: transparent; -fx-background-color: transparent; -fx-font-size: 10;">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#deleteAssignment" text="Delete Assignment" />
+          <MenuItem mnemonicParsing="false" onAction="#addAssignment" text="Add Assignment" />
+        </items>
+      </MenuButton>
+   </children>
+</Pane>

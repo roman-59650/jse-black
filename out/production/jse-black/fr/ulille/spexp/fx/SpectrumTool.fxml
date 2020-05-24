@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.ulille.spexp.fx.SpectrumTool">
+   <children>
+      <TitledPane animated="false" text="Invert/Smooth" VBox.vgrow="ALWAYS">
+         <font>
+            <Font size="12.0" />
+         </font>
+         <content>
+            <VBox alignment="CENTER" prefHeight="92.0" prefWidth="160.0" spacing="6.0">
+               <children>
+                  <Button fx:id="invert" mnemonicParsing="false" onAction="#onInvertClick" prefHeight="21.0" prefWidth="138.0" text="Invert Spectrum" textAlignment="CENTER">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Label nodeOrientation="RIGHT_TO_LEFT" prefHeight="24.0" prefWidth="138.0" text="Smooth Points:">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                     <graphic>
+                        <TextField fx:id="smpField" prefHeight="21.0" prefWidth="45.0" text="5">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </TextField>
+                     </graphic>
+                  </Label>
+                  <Button fx:id="smooth" mnemonicParsing="false" onAction="#onSmoothClick" prefHeight="21.0" prefWidth="138.0" text="Smooth Spectrum">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="diffsmooth" mnemonicParsing="false" onAction="#onDiffSmoothClick" prefHeight="21.0" prefWidth="138.0" text="Diff. and Smooth">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" text="Baseline" VBox.vgrow="ALWAYS">
+         <font>
+            <Font size="12.0" />
+         </font>
+         <content>
+            <VBox alignment="CENTER" prefHeight="158.0" prefWidth="160.0" spacing="6.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefWidth="138.0" text="Baseline Points:">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                     <graphic>
+                        <TextField fx:id="blptField" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="43.0" text="39">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </TextField>
+                     </graphic>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="138.0" text="Y-Limit:">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                     <graphic>
+                        <TextField fx:id="ylimField" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="43.0" text="1000">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </TextField>
+                     </graphic>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefWidth="138.0" text="Zero-Level:">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                     <graphic>
+                        <TextField fx:id="zlevField" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="43.0" text="0">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </TextField>
+                     </graphic>
+                  </Label>
+                  <Button fx:id="createbl" mnemonicParsing="false" onAction="#onCreateBaselineClick" prefHeight="21.0" prefWidth="138.0" text="Create Baseline">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="removebl" mnemonicParsing="false" onAction="#onSuppressBaselineClick" prefHeight="21.0" prefWidth="138.0" text="Remove Baseline">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" text="Peaks" VBox.vgrow="ALWAYS">
+         <font>
+            <Font size="12.0" />
+         </font>
+         <content>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="160.0" spacing="6.0">
+               <children>
+                  <Button fx:id="dofft" alignment="CENTER" mnemonicParsing="false" onAction="#onFFTClick" prefHeight="23.0" prefWidth="138.0" text="FFT">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" minHeight="25.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="138.0" text="Sigma Noise:">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                     <graphic>
+                        <Spinner id="spinner" fx:id="sigmaSpinner" maxHeight="24.0" minHeight="0.0" prefHeight="23.0" prefWidth="49.0" stylesheets="@spinner.css" />
+                     </graphic>
+                  </Label>
+                  <Button fx:id="findpeaks" alignment="CENTER" mnemonicParsing="false" onAction="#onFindPeaksClick" prefHeight="21.0" prefWidth="138.0" text="Find Peaks">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onClearPeaksClick" prefHeight="25.0" prefWidth="138.0" text="Clear Peaks">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="insertpeaks" mnemonicParsing="false" onAction="#onInsertPeaksClick" prefHeight="23.0" prefWidth="138.0" text="Insert Peaks into DB">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="fitpeaks" mnemonicParsing="false" onAction="#onFitPeaksClick" prefHeight="23.0" prefWidth="138.0" text="Fit Peaks">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <ToggleButton fx:id="insertPeakButton" mnemonicParsing="false" onAction="#onInsertSinglePeakClick" prefHeight="23.0" prefWidth="138.0" text="Insert Peak">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </ToggleButton>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+   </children>
+</VBox>

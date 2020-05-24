@@ -1,0 +1,7 @@
+.combo-box .list-cell 
+{
+    -fx-background: white;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 2 2 2 2;
+    -fx-cell-size: 1.66667em; 
+}

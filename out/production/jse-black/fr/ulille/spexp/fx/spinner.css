@@ -1,0 +1,8 @@
+#spinner .increment-arrow-button,
+#spinner .decrement-arrow-button {
+    -fx-padding: 2 3 2 3;
+}
+
+#spinner {
+    -fx-font-size: 12;
+}

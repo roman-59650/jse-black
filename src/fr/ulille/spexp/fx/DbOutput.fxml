@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.ulille.spexp.fx.DbOutput">
+   <children>
+      <GridPane prefHeight="49.0" prefWidth="600.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.0" minWidth="10.0" prefWidth="301.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.0" minWidth="10.0" prefWidth="301.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.0" minWidth="10.0" prefWidth="301.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.0" minWidth="10.0" prefWidth="301.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.0" minWidth="10.0" prefWidth="299.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Species:" GridPane.halignment="RIGHT">
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
+            <ComboBox fx:id="aliasCombo" prefWidth="150.0" GridPane.columnIndex="1" />
+            <Button fx:id="saveButton" mnemonicParsing="false" text="Save" GridPane.columnIndex="4">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Label text="Format:" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
+            <ComboBox fx:id="formatCombo" prefWidth="150.0" GridPane.columnIndex="3" />
+         </children>
+      </GridPane>
+      <AnchorPane prefHeight="370.0" prefWidth="600.0">
+         <children>
+            <TextArea fx:id="outText" layoutX="212.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0" promptText="No assigned transitions." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Monospaced Regular" size="12.0" />
+               </font></TextArea>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

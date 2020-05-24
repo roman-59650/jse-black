@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane id="dlgpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="179.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.ulille.spexp.fx.PeakDialog">
+   <children>
+      <Label fx:id="freqLabel" alignment="TOP_RIGHT" layoutY="44.0" prefHeight="17.0" prefWidth="97.0" text="1" textAlignment="RIGHT" wrapText="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Spinner fx:id="accSpinner" editable="true" layoutX="109.0" layoutY="41.0" prefHeight="21.0" prefWidth="64.0" stylesheets="@peakspinner.css" />
+      <Button fx:id="assignButton" layoutX="38.0" layoutY="9.0" mnemonicParsing="false" onAction="#assignPeak" prefHeight="22.0" prefWidth="103.0" text="Assign">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <MenuButton layoutX="150.0" layoutY="13.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="21.0" rotate="-90.0" styleClass="my-menu-button" stylesheets="@menuitem.css">
+        <items>
+          <MenuItem fx:id="pfit" mnemonicParsing="false" onAction="#onPeakFit" text="Fit" />
+          <MenuItem mnemonicParsing="false" onAction="#deletePeak" text="Delete" />
+        </items>
+         <font>
+            <Font size="10.0" />
+         </font>
+      </MenuButton>
+   </children>
+</Pane>

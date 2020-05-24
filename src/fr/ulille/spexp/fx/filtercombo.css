@@ -1,0 +1,19 @@
+#compcombo .arrow-button {
+    -fx-padding: 2 3 2 3;
+}
+
+#compcombo {
+	-fx-background-color: white;
+	-fx-font-family: 'Monaco';
+	-fx-font-weight: bold;
+	-fx-font-size: 14;
+	-fx-padding: 1 1 1 1;
+}
+
+.combo-box .list-cell 
+{
+    -fx-background: white;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 1 1 1 1;
+    -fx-cell-size: 1.66667em; 
+}

@@ -6,6 +6,13 @@
         <option name="appClass" value="fr.ulille.spexp.fx.Main" />
         <option name="description" value="" />
         <option name="htmlPlaceholderId" value="" />
+        <option name="icons">
+          <JavaFxApplicationIcons>
+            <option name="linuxIcon" value="$PROJECT_DIR$/src/fr/ulille/spexp/resources/icons/application.ico" />
+            <option name="macIcon" value="$PROJECT_DIR$/src/fr/ulille/spexp/resources/icons/application.ico" />
+            <option name="windowsIcon" value="$PROJECT_DIR$/src/fr/ulille/spexp/resources/icons/application.ico" />
+          </JavaFxApplicationIcons>
+        </option>
         <option name="title" value="" />
         <option name="vendor" value="" />
         <option name="version" value="2020.05.24.1" />

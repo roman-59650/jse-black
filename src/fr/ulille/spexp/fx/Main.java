@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -38,6 +39,7 @@ public class Main extends Application {
             }
             Platform.exit();
         });
+        primaryStage.getIcons().add(new Image("fr/ulille/spexp/resources/icons/application_red.png"));
         primaryStage.show();
         pstage = primaryStage;
         mainfrm.toolStage.initOwner(primaryStage);

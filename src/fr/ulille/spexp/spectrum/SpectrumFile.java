@@ -168,15 +168,11 @@ public class SpectrumFile {
     }
 
     public void vertZoomIn(double factor){
-        //ycLimit = ycLimit+0.07*(ydLimit-ycLimit);
-        //ydLimit = ydLimit-0.07*(ydLimit-ycLimit);
         ycLimit *= factor;
         ydLimit *= factor;
     }
 
     public void vertZoomOut(double factor){
-        //ycLimit = ycLimit-0.07*(ydLimit-ycLimit);
-        //ydLimit = ydLimit+0.07*(ydLimit-ycLimit);
         ycLimit /= factor;
         ydLimit /= factor;
     }

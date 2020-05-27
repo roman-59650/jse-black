@@ -8,10 +8,12 @@ public class VoigtFunctionInt implements UnivariateFunction {
     private SimpsonIntegrator simpsonIntegrator;
     private UnivariateFunction voigtFunction;
     private UnivariateFunction dopplerFunction;
+    private ApproxVoigt approxVoigt;
     private double l;
 
     public VoigtFunctionInt(int drv, double x, double x0, double w, double l, double a){
         simpsonIntegrator = new SimpsonIntegrator();
+        approxVoigt = new ApproxVoigt(x0,w,l,a, (short) drv);
         this.l = l;
         switch (drv){
             case 0: voigtFunction = new VoigtFunction0(x,x0,w,l,a); dopplerFunction = new DopplerFunction0(x,x0,w,a); break;
@@ -36,6 +38,7 @@ public class VoigtFunctionInt implements UnivariateFunction {
         if (l==0)
             return dopplerFunction.value(x);
         else
-            return simpsonIntegrator.integrate(10000,voigtFunction,-5,5);
+            //return simpsonIntegrator.integrate(10000,voigtFunction,-5,5);
+            return approxVoigt.value(x);
     }
 }

@@ -30,7 +30,7 @@ public class SpectrumFile {
     protected double iniyc;
     protected double iniyd;
     protected double ydOffset;
-    protected double fStep;
+    //protected double fStep;
     protected String fileName;
     private List<Double> xdataList;
     private List<Double> ydataList;
@@ -245,7 +245,7 @@ public class SpectrumFile {
         dataPoints = xData.length;
         freqMin = xData[0];
         freqMax = xData[dataPoints-1];
-        fStep = (xData[dataPoints - 1]-xData[0])/(dataPoints - 1);
+        //fStep = (xData[dataPoints - 1]-xData[0])/(dataPoints - 1);
         xaLimit = 0;
         xbLimit = dataPoints-1;
         YMin = Arrays.stream(yData).min().getAsDouble();
@@ -311,7 +311,7 @@ public class SpectrumFile {
 	        //YMin = ydataList.stream().min(Double::compare).get();
 	        freqMin = xdataList.get(0);
 	        freqMax = xdataList.get(xdataList.size()-1);
-	        fStep = (freqMax-freqMin)/(xdataList.size()-1);
+	        //fStep = (freqMax-freqMin)/(xdataList.size()-1);
             xaLimit = 0;
             xbLimit = xdataList.size()-1;
             ycLimit = YMin-0.05*(YMax-YMin);
@@ -381,7 +381,7 @@ public class SpectrumFile {
         this.fileName = fileName;
         freqMin = xData[0];
         freqMax = xData[dataPoints-1];
-        fStep = (xData[dataPoints - 1]-xData[0])/(dataPoints - 1);
+        //fStep = (xData[dataPoints - 1]-xData[0])/(dataPoints - 1);
         xaLimit = 0;
         xbLimit = dataPoints-1;
         ycLimit = YMin-0.05*(YMax-YMin);

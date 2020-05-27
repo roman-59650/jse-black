@@ -7,13 +7,16 @@ public class VoigtFunctionInt implements UnivariateFunction {
 
     private SimpsonIntegrator simpsonIntegrator;
     private UnivariateFunction voigtFunction;
+    private UnivariateFunction dopplerFunction;
+    private double l;
 
     public VoigtFunctionInt(int drv, double x, double x0, double w, double l, double a){
         simpsonIntegrator = new SimpsonIntegrator();
+        this.l = l;
         switch (drv){
-            case 0: voigtFunction = new VoigtFunction0(x,x0,w,l,a); break;
-            case 1: voigtFunction = new VoigtFunction1(x,x0,w,l,a); break;
-            case 2: voigtFunction = new VoigtFunction2(x,x0,w,l,a);
+            case 0: voigtFunction = new VoigtFunction0(x,x0,w,l,a); dopplerFunction = new DopplerFunction0(x,x0,w,a); break;
+            case 1: voigtFunction = new VoigtFunction1(x,x0,w,l,a); dopplerFunction = new DopplerFunction1(x,x0,w,a); break;
+            case 2: voigtFunction = new VoigtFunction2(x,x0,w,l,a); dopplerFunction = new DopplerFunction2(x,x0,w,a);
         }
 
     }
@@ -30,7 +33,9 @@ public class VoigtFunctionInt implements UnivariateFunction {
 
     @Override
     public double value(double x) {
-        //return simpson(voigtFunction,-5,5,100);
-        return simpsonIntegrator.integrate(10000,voigtFunction,-5,5);
+        if (l==0)
+            return dopplerFunction.value(x);
+        else
+            return simpsonIntegrator.integrate(10000,voigtFunction,-5,5);
     }
 }

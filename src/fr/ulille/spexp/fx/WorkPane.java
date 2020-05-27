@@ -154,7 +154,7 @@ public class WorkPane extends SplitPane {
                         for (int i=0;i<xpr.length;i++){
                             double s = 0.;
                             for (int k=0;k<x0.length;k++){
-                                double dw = 2*3.58e-7*x0[k]*Math.sqrt(Temp/molMass);
+                                double dw = 3.58e-7*x0[k]*Math.sqrt(Temp/molMass); // Doppler HWHM
                                 if (Math.abs(xpr[i]-x0[k])<LINEWIDTHFACTOR*dw){
                                     double lw = dw*(linewidthMultiplier-1);
                                     if (lw<0) lw = 0;

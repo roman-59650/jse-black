@@ -33,7 +33,8 @@ public class VoigtFunction1 implements UnivariateFunction {
     public double value(double t) {
         double xx = (x-x0)/w;
         double yy = l/w;
-        double c = -2E+5*yy/(FastMath.pow(w,2)*FastMath.pow(FastMath.PI,1.5));
+        //double c = -2E+5*yy/(FastMath.pow(w,2)*FastMath.pow(FastMath.PI,1.5));
+        double c =2E+5; // just a coefficient, simplified version to avoid yy=0 in case if l = 0
         return FastMath.exp(-t*t)*c*a*(xx-t)/FastMath.pow(yy*yy+(xx-t)*(xx-t),2);
     }
 

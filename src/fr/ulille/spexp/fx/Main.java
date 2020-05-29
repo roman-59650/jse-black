@@ -22,6 +22,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        properties = new Properties();
+        InputStream inputStream = new FileInputStream("config.xml");
+        properties.loadFromXML(inputStream);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
         Parent root = loader.load();
         mainfrm = loader.getController();
@@ -44,10 +48,6 @@ public class Main extends Application {
         pstage = primaryStage;
         mainfrm.toolStage.initOwner(primaryStage);
         mainfrm.fileListStage.initOwner(primaryStage);
-
-        properties = new Properties();
-        InputStream inputStream = new FileInputStream("config.xml");
-        properties.loadFromXML(inputStream);
     }
 
     public static Properties getProperties() {

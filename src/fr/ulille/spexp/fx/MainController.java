@@ -286,6 +286,13 @@ public class MainController implements Initializable {
                 WorkPane workPane = (WorkPane) tabpane.getSelectionModel().getSelectedItem().getContent().lookup("#workpane");
                 workPane.setDatabase(db);
             });
+            //**********
+            // This part of code is put here because we need to create fitSpectrumPane before creating any other
+            // WorkPane. Otherwise it provokes a strange error with assignedPeakDlg that still has to be understood
+            fitSpectrum.fitSpectrumPane = new FitSpectrumPane(fitSpectrum.box1.getWidth(),fitSpectrum.box1.getHeight());
+            fitSpectrum.box1.getChildren().add(fitSpectrum.fitSpectrumPane);
+            VBox.setVgrow(fitSpectrum.fitSpectrumPane, Priority.ALWAYS);
+            //**********
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -522,14 +529,11 @@ public class MainController implements Initializable {
                 fitSpectrum.fitSpectrumPane.showSpectrum();
                 fitSpectrum.fitSpectrumPane.showPeaks();
             } else {
-                fitSpectrum.fitSpectrumPane = new FitSpectrumPane(fitSpectrum.box1.getWidth(),fitSpectrum.box1.getHeight());
-                fitSpectrum.box1.getChildren().add(fitSpectrum.fitSpectrumPane);
-                VBox.setVgrow(fitSpectrum.fitSpectrumPane, Priority.ALWAYS);
+                fitSpectrum.initModel();
                 fitSpectrum.fitSpectrumPane.setSpectrum(workPane.getSpectrum());
                 fitSpectrum.fitSpectrumPane.setDatabase(db);
                 fitSpectrum.fitSpectrumPane.showSpectrum();
-                fitSpectrum.initModel();
-                //fitSpectrum.fitSpectrumPane.showPeaks();
+                fitSpectrum.fitSpectrumPane.showPeaks();
             }
         }
     }

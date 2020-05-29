@@ -381,21 +381,24 @@ public class SpectrumPane extends Pane {
         double psx = cv1.getParent().getScene().getWindow().getX()+positionX;
         double psy = cv1.getParent().getScene().getWindow().getY()+positionY;
         assignedPeakDlgStage.hide();
-        assignedPeakDlgStage.setWidth(textwidth+20); // check what to do with +20
         assignedPeakDlgStage.setX(psx);
         assignedPeakDlgStage.setY(psy);
+
+        assignedPeakDialog.listView.getItems().clear();
+        for (Text t:assignment){
+            assignedPeakDialog.listView.getItems().add(t);
+        }
+
         assignedPeakDlgStage.show();
         decorationHeight = assignedPeakDlgStage.getHeight()-assignedPeakDlgStage.getScene().getHeight();
         //assignedPeakDialog.fillList(assignment);
         //assignedPeakDialog.listView.setPrefHeight(assignedPeakDialog.getCellHeight()*
         //        (assignment.size()+1));
-        assignedPeakDialog.listView.getItems().clear();
-        for (Text t:assignment){
-            assignedPeakDialog.listView.getItems().add(t);
-        }
+
         /*assignedPeakDialog.vBox.setPrefHeight(assignedPeakDialog.getCellHeight()*(assignment.size()+1)+
                 assignedPeakDialog.tool.getPrefHeight());
         assignedPeakDlgStage.setHeight(assignedPeakDialog.vBox.getPrefHeight()+decorationHeight);*/
+        assignedPeakDlgStage.setWidth(textwidth+20); // check what to do with +20
         assignedPeakDlgStage.setHeight(assignedPeakDialog.getCellHeight()*(assignment.size()+1)+
                 assignedPeakDialog.tool.getHeight()+decorationHeight+5);
     }

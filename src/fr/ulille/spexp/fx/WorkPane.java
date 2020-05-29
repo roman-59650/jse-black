@@ -96,7 +96,7 @@ public class WorkPane extends SplitPane {
         if (spectrumPane.getSpectrum().isFileRead()) {
             spectrumPane.showSpectrum();
             predsPane.showPredictions();
-            if (Boolean.parseBoolean(Main.getProperties().getProperty("plot profile"))) generateProfile();
+            if (Boolean.parseBoolean(Main.getProperties().getProperty("plot profile"))&&!isProfileReady) generateProfile();
         }
     }
 
@@ -745,7 +745,7 @@ public class WorkPane extends SplitPane {
             spectrumPane.plotXY(procv.getGraphicsContext2D(),xs,ys,xbLimit-xaLimit+1,color);
         }
 
-        public void showPredictions(){
+        public void  showPredictions(){
             if (!spectrumPane.getSpectrum().isFileRead()) return;
             double pfr = 0.0;
             double pamax = 0.0;

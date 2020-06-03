@@ -523,18 +523,23 @@ public class MainController implements Initializable {
         WorkPane workPane = (WorkPane) tabpane.getSelectionModel().getSelectedItem().getContent().lookup("#workpane");
         if (workPane!=null){
             fitspStage.show();
-            if (fitSpectrum.fitSpectrumPane!=null){
+            fitSpectrum.fitSpectrumPane.setSpectrum(workPane.getSpectrum());
+            fitSpectrum.fitSpectrumPane.setDatabase(db);
+            fitSpectrum.fitSpectrumPane.showSpectrum();
+            fitSpectrum.fitSpectrumPane.showPeaks();
+            fitSpectrum.initModel();
+            /*if (fitSpectrum.fitSpectrumPane!=null){
                 fitSpectrum.fitSpectrumPane.setSpectrum(workPane.getSpectrum());
                 fitSpectrum.fitSpectrumPane.setDatabase(db);
                 fitSpectrum.fitSpectrumPane.showSpectrum();
                 fitSpectrum.fitSpectrumPane.showPeaks();
             } else {
-                fitSpectrum.initModel();
                 fitSpectrum.fitSpectrumPane.setSpectrum(workPane.getSpectrum());
                 fitSpectrum.fitSpectrumPane.setDatabase(db);
                 fitSpectrum.fitSpectrumPane.showSpectrum();
                 fitSpectrum.fitSpectrumPane.showPeaks();
-            }
+                fitSpectrum.initModel();
+            }*/
         }
     }
 

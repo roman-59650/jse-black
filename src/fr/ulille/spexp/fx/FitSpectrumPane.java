@@ -16,6 +16,7 @@ import java.util.Collections;
 public class FitSpectrumPane extends SpectrumPane {
 
     private final static int COMMONS_NUM = 2;
+    private static final int A_CHARACTER = 0x41;
     private boolean isBaselineBoundsInsert;
     private boolean isLineInsert;
     private ArrayList<Integer> boundsList;
@@ -50,9 +51,8 @@ public class FitSpectrumPane extends SpectrumPane {
             GraphicsContext gc = cv2.getGraphicsContext2D();
             gc.setStroke(Color.RED);
             gc.strokeLine(xpos,ypos-5,xpos,ypos+5);
-            gc.strokeText(String.format("%d",boundsList.size()),xpos,ypos-10);
-
-
+            char stroke = (char)(A_CHARACTER+boundsList.size()-1);
+            gc.strokeText(String.valueOf(stroke),xpos,ypos-10);
 
             if (boundsList.size()==4){
                 isBaselineBoundsInsert = false;

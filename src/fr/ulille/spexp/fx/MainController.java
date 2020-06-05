@@ -285,6 +285,7 @@ public class MainController implements Initializable {
                 fitSpectrum.onResetClick(new ActionEvent());
                 WorkPane workPane = (WorkPane) tabpane.getSelectionModel().getSelectedItem().getContent().lookup("#workpane");
                 workPane.setDatabase(db);
+                workPane.plotAll();  // reset spectrum and predictions !!!
             });
             //**********
             // This part of code is put here because we need to create fitSpectrumPane before creating any other

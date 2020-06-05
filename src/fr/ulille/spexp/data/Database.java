@@ -634,7 +634,8 @@ public class Database {
             Statement s = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet res = s.executeQuery(statement);
             if (!res.first()) return row;
-            row.setSpecies(res.getString("SPECIES"));
+            row  = getAssignedRow(res);
+            /*row.setSpecies(res.getString("SPECIES"));
             for (int i = 0; i < dbformat.getLength(); i++) {
                 String qn = dbformat.getQName(i)+"2";
                 if (dbformat.getDataType(i) == DbFormat.qnDataType.IntData) {
@@ -659,6 +660,44 @@ public class Database {
                 if (dbformat.getDataType(i) == DbFormat.qnDataType.FloData) {
                     row.setQns(i+len, res.getDouble(qn));
                 }                
+            }
+            row.setFrequency(res.getDouble("AFREQ"));
+            row.setWeight(res.getDouble("WEIGHT"));
+            row.setIntensity(res.getDouble("INTENS"));*/
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return row;
+    }
+
+    public AssignRowData getAssignedRow(ResultSet res){
+        AssignRowData row = new AssignRowData(dbformat);
+        try {
+            row.setSpecies(res.getString("SPECIES"));
+            for (int i = 0; i < dbformat.getLength(); i++) {
+                String qn = dbformat.getQName(i)+"2";
+                if (dbformat.getDataType(i) == DbFormat.qnDataType.IntData) {
+                    row.setQns(i, res.getInt(qn));
+                }
+                if (dbformat.getDataType(i) == DbFormat.qnDataType.StrData) {
+                    row.setQns(i, res.getString(qn));
+                }
+                if (dbformat.getDataType(i) == DbFormat.qnDataType.FloData) {
+                    row.setQns(i, res.getDouble(qn));
+                }
+            }
+            int len = dbformat.getLength();
+            for (int i = 0; i < dbformat.getLength(); i++) {
+                String qn = dbformat.getQName(i)+"1";
+                if (dbformat.getDataType(i) == DbFormat.qnDataType.IntData) {
+                    row.setQns(i+len, res.getInt(qn));
+                }
+                if (dbformat.getDataType(i) == DbFormat.qnDataType.StrData) {
+                    row.setQns(i+len, res.getString(qn));
+                }
+                if (dbformat.getDataType(i) == DbFormat.qnDataType.FloData) {
+                    row.setQns(i+len, res.getDouble(qn));
+                }
             }
             row.setFrequency(res.getDouble("AFREQ"));
             row.setWeight(res.getDouble("WEIGHT"));
@@ -695,7 +734,7 @@ public class Database {
 
     public void getTransList(String filter){
         try {
-            String statement = "SELECT * FROM APP.SPDATA "+filter;
+            String statement = "SELECT * FROM APP.SPDATA "+filter+"ORDER BY ID"; // ordering by ID
             java.sql.Statement s = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             tranrs = s.executeQuery(statement);
         } catch (SQLException ex) {
@@ -749,15 +788,14 @@ public class Database {
         try {
             getAsgnDataList.setString(1, species);
             asgnrs = getAsgnDataList.executeQuery();
-            AssignRowData arow;
+            AssignRowData arow = new AssignRowData(this.dbformat);
+            arow.setFormat(format);
             if (asgnrs.first()) {
-                arow = getADataRow(asgnrs.getInt("ID"));
-                arow.setFormat(format);
+                arow = getAssignedRow(asgnrs);
                 list.add(arow.toString());
             } else return list;
             while (asgnrs.next()){
-                arow = getADataRow(asgnrs.getInt("ID"));
-                arow.setFormat(format);
+                arow = getAssignedRow(asgnrs);
                 list.add(arow.toString());
             }
 
@@ -956,7 +994,7 @@ public class Database {
                     row = res.getInt("ID");
                     rowstr = rowstr+","+String.valueOf(row);
                 }
-                else{
+                else {
                     if (below!=0){
                         insertPrStatement.setDouble(1, over/below);
                         insertPrStatement.setDouble(2, below);

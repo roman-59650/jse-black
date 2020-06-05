@@ -3,7 +3,6 @@ package fr.ulille.spexp.fx;
 import fr.ulille.spexp.data.Database;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import fr.ulille.spexp.fftprofile.*;
 import javafx.scene.text.TextAlignment;
@@ -229,7 +228,6 @@ public class FitSpectrumPane extends SpectrumPane {
     }
 
     public void updateLorentzWidth(double value){
-        System.out.println("update");
         fitprofile.setLorentzWidth(value);
         showProfile();
     }

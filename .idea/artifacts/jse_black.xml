@@ -25,6 +25,7 @@
       <element id="directory" name="lib">
         <element id="library" level="project" name="libs" />
       </element>
+      <element id="file-copy" path="$PROJECT_DIR$/config.xml" />
     </root>
   </artifact>
 </component>

@@ -109,8 +109,13 @@ public class WorkPane extends SplitPane {
             if (ypr[i]>dmax) dmax = ypr[i];
             if (ypr[i]<dmin) dmin = ypr[i];
         }
-        yprmin = dmin-0.05*(dmax-dmin);
-        yprmax = dmax+0.05*(dmax-dmin);
+        if (dmax!=dmin){
+            yprmin = dmin-0.05*(dmax-dmin);
+            yprmax = dmax+0.05*(dmax-dmin);
+        } else {
+            yprmin = 0;
+            yprmax = 1;
+        }
     }
 
     private void generateProfile(){
@@ -128,10 +133,16 @@ public class WorkPane extends SplitPane {
                         // get all transitions in the file
                         predictedFrequencies.clear();
                         predictedIntesities.clear();
+                        xpr = spectrumPane.getSpectrum().getXData();
+                        ypr = new double[xpr.length];
+                        isProfileReady = false;
                         try {
                             String extfilter = "WHERE FREQ>"+fmin+" AND FREQ<"+fmax;
                             db.getTransList(extfilter);
-                            db.tranrs.first();
+                            if (!db.tranrs.first()) {
+                                this.cancel();  // cancel profile generation when there are no predictions
+                                return null;
+                            }
                             predictedFrequencies.add(db.tranrs.getDouble("FREQ"));
                             predictedIntesities.add(db.tranrs.getDouble("ALPHA"));
                             while (db.tranrs.next()) {
@@ -145,8 +156,6 @@ public class WorkPane extends SplitPane {
                         db.getTransList("");
                         double[] x0 = predictedFrequencies.stream().mapToDouble(d->d.doubleValue()).toArray();
                         double[] a0 = predictedIntesities.stream().mapToDouble(Double::doubleValue).toArray();
-                        xpr = spectrumPane.getSpectrum().getXData();
-                        ypr = new double[xpr.length];
                         double linewidthMultiplier = Double.parseDouble(Main.getProperties().getProperty("lw multiplier"));
                         double molMass = Main.mainfrm.getDatabase().getMiscData().getMass();
                         double Temp = Main.mainfrm.getDatabase().getMiscData().getTemp();
@@ -172,12 +181,15 @@ public class WorkPane extends SplitPane {
         };
         generateProfileService.stateProperty().addListener((ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue, Worker.State newValue) -> {
             switch (newValue) {
-                case FAILED:
+                case FAILED: break;
                 case CANCELLED:
+                    statusBar.progressProperty().unbind();
+                    statusBar.progressProperty().setValue(0);
+                    break;
                 case SUCCEEDED:
                     yprScale();
-                    predsPane.showPredictionsProfile();
                     isProfileReady = true;
+                    predsPane.showPredictionsProfile();
                     statusBar.progressProperty().unbind();
                     statusBar.progressProperty().setValue(0);
                     statusBar.getRightItems().add(new Text("Profile: OK"));
@@ -614,15 +626,10 @@ public class WorkPane extends SplitPane {
             widthProperty().addListener(((observable, oldValue, newValue) -> showPredictions()));
             heightProperty().addListener(((observable, oldValue, newValue) -> showPredictions()));
 
-            //pcv.addEventHandler(ScrollEvent.SCROLL,this::onMouseScroll);
-            //pcv.addEventHandler(MouseEvent.MOUSE_CLICKED,this::onMouseDoubleClick);
-
             this.addEventHandler(ScrollEvent.SCROLL,this::onMouseScroll);
             this.addEventHandler(MouseEvent.MOUSE_CLICKED,this::onMouseDoubleClick);
-
             this.getChildren().add(pcv);
             this.getChildren().add(procv);
-
 
             db = Main.mainfrm.getDatabase();
 
@@ -632,8 +639,6 @@ public class WorkPane extends SplitPane {
             textFlow.setTextAlignment(TextAlignment.CENTER);
             this.getChildren().add(textFlow);
 
-            //predsLabelFont = new Font("Monaco",10);
-            //predsLabelFont = Font.loadFont("file:src/fr/ulille/spexp/resources/fonts/CourierPrimeSans.ttf",10);
             predsLabelFont = Font.font("monospaced",10);
 
             // estimation of the predictions label height (SCROLLHEIGHT) using current predictions label font

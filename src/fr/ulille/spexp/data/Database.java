@@ -127,7 +127,7 @@ public class Database {
     public ResultSet miscrs;  // miscellaneous data
     private boolean isConn = false;
     private DbFormat dbformat;
-    private CachedRowSet crs;
+    private CachedRowSet crs;  // cached peaks
 
     public CachedRowSet getPeaksCache(){
         return crs;
@@ -727,6 +727,7 @@ public class Database {
             filterPrData.setDouble(1, fmin);
             filterPrData.setDouble(2, fmax);
             predrs = filterPrData.executeQuery();
+            if (!predrs.first()); // set at first row to avoid "no current row" exception
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -737,6 +738,7 @@ public class Database {
             String statement = "SELECT * FROM APP.SPDATA "+filter+"ORDER BY ID"; // ordering by ID
             java.sql.Statement s = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             tranrs = s.executeQuery(statement);
+            if (!tranrs.first()); // set at first row to avoid "no current row" exception
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }

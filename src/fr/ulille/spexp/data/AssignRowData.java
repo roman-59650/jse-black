@@ -9,14 +9,14 @@ import java.util.Locale;
 public class AssignRowData extends PredictRowData {
 
     private double wght;
-    private int fmt;
+    private int outputFormat;
     public static final int GENERAL_FMT = 0;
     public static final int ASFIT_FMT = 1;
     public static final int SPFIT_FMT = 2;
     
     public AssignRowData(DbFormat dbformat){
         super(dbformat);
-        fmt = 0;
+        this.outputFormat = 0;
     }
     
     public void setWeight(double value){
@@ -27,8 +27,8 @@ public class AssignRowData extends PredictRowData {
         return this.wght;
     }
     
-    public void setFormat(int value){
-        fmt = value;
+    public void setOutputFormat(int value){
+        this.outputFormat = value;
     }
 
     private String getOutputFormat(int i){
@@ -42,7 +42,7 @@ public class AssignRowData extends PredictRowData {
     @Override
     public String toString(){
         String str = "";
-        if (fmt == 0){
+        if (outputFormat == 0){
             str = str + String.format("%8s :", this.species);
             for (int i=0;i<format.getLength();i++){  
                 str = str + String.format(Locale.US,getOutputFormat(i), qnums.get(i));
@@ -54,7 +54,7 @@ public class AssignRowData extends PredictRowData {
             str = str + String.format(Locale.US,"%15.3f %10.3f", freq, wght);
             if (this.intsy!=0) str = str + String.format(Locale.US, " %.2E", intsy);
         }
-        if (fmt == 1){
+        if (outputFormat == 1){
             for (int i=0;i<format.getLength();i++){  
                 str = str + String.format("%5d", qnums.get(i));
             }
@@ -66,7 +66,7 @@ public class AssignRowData extends PredictRowData {
             if (this.intsy!=0) str = str + String.format(Locale.US, "%5d %-10.1E", 2, intsy);
             else str = str + String.format(Locale.US, "%5d", 1);
         }
-        if (fmt == 2){
+        if (outputFormat == 2){
             for (int i=0;i<format.getLength();i++){  
                 str = str + String.format("%3d", qnums.get(i));
             }
@@ -79,7 +79,7 @@ public class AssignRowData extends PredictRowData {
             str = str + String.format(Locale.US,freeform+"%12.5f", freq, wght);
             if (this.intsy!=0) str = str + String.format(Locale.US, " %3.1E", intsy);
         }
-        if (fmt == 3){
+        if (outputFormat == 3){
             str += String.format(Locale.US,"%11.3f ", freq);
             for (int i=0;i<format.getLength();i++){
                 str += String.format("%5d", qnums.get(i));

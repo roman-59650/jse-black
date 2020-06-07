@@ -262,7 +262,7 @@ public class MainController implements Initializable {
             outputStage.setScene(new Scene(comp));
             outputStage.initModality(Modality.NONE);
             outputStage.initStyle(StageStyle.UTILITY);
-            outputStage.setTitle("Files");
+            outputStage.setTitle("Database Output");
             outputStage.setResizable(false);
 
             outputStage.setOnShowing(windowEvent -> {
@@ -521,6 +521,7 @@ public class MainController implements Initializable {
     }
 
     public void onProfileFitClick(ActionEvent e){
+        if (Main.mainfrm.tabpane.getSelectionModel().isEmpty()) return;
         WorkPane workPane = (WorkPane) tabpane.getSelectionModel().getSelectedItem().getContent().lookup("#workpane");
         if (workPane!=null){
             fitspStage.show();

@@ -752,7 +752,7 @@ public class Database {
         }
     }
 
-    public List<String> getAssignedLineList(String species, int format){
+    /*public List<String> getAssignedLineList(String species, int format){
         List<String> list = new ArrayList<>();
         ResultSet rs = null;
         try{
@@ -783,15 +783,39 @@ public class Database {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }*/
+
+
+    public List<AssignRowData> getAssignedLineList(String species, int format){
+        List<AssignRowData> list = new ArrayList<>();
+        try{
+            getAsgnDataList.setString(1,species);
+            asgnrs = getAsgnDataList.executeQuery();
+            AssignRowData arow = new AssignRowData(this.dbformat);
+            arow.setOutputFormat(format);
+            if (asgnrs.first()) {
+                arow = getAssignedRow(asgnrs);
+                arow.setOutputFormat(format);
+                list.add(arow);
+            } else return list;
+            while (asgnrs.next()){
+                arow = getAssignedRow(asgnrs);
+                arow.setOutputFormat(format);
+                list.add(arow);
+            }
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return list;
     }
-    
+
     public List<String> getAsgnLineList(String species, int format){
         List<String> list = new ArrayList<>();
         try {
             getAsgnDataList.setString(1, species);
             asgnrs = getAsgnDataList.executeQuery();
             AssignRowData arow = new AssignRowData(this.dbformat);
-            arow.setFormat(format);
+            arow.setOutputFormat(format);
             if (asgnrs.first()) {
                 arow = getAssignedRow(asgnrs);
                 list.add(arow.toString());

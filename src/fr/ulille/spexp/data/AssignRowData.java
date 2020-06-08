@@ -63,7 +63,7 @@ public class AssignRowData extends PredictRowData {
                 str = str + String.format("%5d", qnums.get(i));
             }
             str = str + String.format(Locale.US,"%20.3f %15.6f", freq, wght);
-            if (this.intsy!=0) str = str + String.format(Locale.US, "%5d %-10.1E", 2, intsy);
+            if (this.intsy!=1.||this.intsy!=0) str = str + String.format(Locale.US, "%5d %-10.1E", 2, intsy);
             else str = str + String.format(Locale.US, "%5d", 1);
         }
         if (outputFormat == 2){
@@ -77,7 +77,7 @@ public class AssignRowData extends PredictRowData {
             int freelen = 40 - 6*format.getLength()+15;
             String freeform = "%" + Integer.toString(freelen) + ".3f ";
             str = str + String.format(Locale.US,freeform+"%12.5f", freq, wght);
-            if (this.intsy!=0) str = str + String.format(Locale.US, " %3.1E", intsy);
+            str = str + String.format(Locale.US, " %3.1E", intsy);
         }
         if (outputFormat == 3){
             str += String.format(Locale.US,"%11.3f ", freq);

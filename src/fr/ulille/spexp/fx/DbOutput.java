@@ -33,7 +33,6 @@ public class DbOutput implements Initializable {
     @FXML ComboBox<String> aliasCombo;
     @FXML ComboBox<String> formatCombo;
     @FXML Button saveButton;
-    @FXML StatusBar statusBar;
     @FXML ListView<AssignRowData> assignRowDataListView;
     private List<AssignRowData> dataList;
 

@@ -36,8 +36,6 @@ public class SpectrumPane extends Pane {
     protected Canvas cv1;
     protected Canvas cv2;
     protected static final int MAXRENDERINGPOINTS = 16384;
-    protected static final double PEAKSIZE = 7;
-    protected static final double HALFPEAKSIZE = PEAKSIZE/2;
     protected CachedRowSet peakResultSet;
     protected boolean isPeakSelected;
     protected boolean isPeakSelectionCancelled;
@@ -129,14 +127,6 @@ public class SpectrumPane extends Pane {
 
     public void setPeakResultSet(CachedRowSet peakResultSet) {
         this.peakResultSet = peakResultSet;
-        /*try {
-            if (this.peakResultSet.first())
-                //System.out.println(this.peakResultSet.getDouble("PEAK_FR"));
-            else
-                //System.out.println("ResultSet error");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }
 
     protected void plotXY(GraphicsContext gc, double[] xdata, double[] ydata, int npoints, Color color){

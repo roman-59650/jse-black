@@ -8,13 +8,13 @@
 <entry key="profile color">0xff0000ff</entry>
 <entry key="x-axis ticks">20</entry>
 <entry key="plot profile">true</entry>
-<entry key="hpf cutoff">0.31</entry>
-<entry key="default uncertainty">0.05</entry>
 <entry key="background color">0xccccccff</entry>
-<entry key="profile derivative">2</entry>
+<entry key="default uncertainty">0.05</entry>
+<entry key="hpf cutoff">0.31</entry>
 <entry key="predictions background">0x999999ff</entry>
+<entry key="profile derivative">2</entry>
 <entry key="unres linewidth">0.2</entry>
-<entry key="lw multiplier">1.5</entry>
 <entry key="pen width">0.8</entry>
+<entry key="lw multiplier">2.5</entry>
 <entry key="show x-axis">true</entry>
 </properties>

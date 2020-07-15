@@ -380,17 +380,11 @@ public class SpectrumPane extends Pane {
         }
 
         assignedPeakDlgStage.show();
-        decorationHeight = assignedPeakDlgStage.getHeight()-assignedPeakDlgStage.getScene().getHeight();
-        //assignedPeakDialog.fillList(assignment);
-        //assignedPeakDialog.listView.setPrefHeight(assignedPeakDialog.getCellHeight()*
-        //        (assignment.size()+1));
 
-        /*assignedPeakDialog.vBox.setPrefHeight(assignedPeakDialog.getCellHeight()*(assignment.size()+1)+
-                assignedPeakDialog.tool.getPrefHeight());
-        assignedPeakDlgStage.setHeight(assignedPeakDialog.vBox.getPrefHeight()+decorationHeight);*/
+        //decorationHeight = assignedPeakDlgStage.getHeight()-assignedPeakDlgStage.getScene().getHeight();
         assignedPeakDlgStage.setWidth(textwidth+20); // check what to do with +20
-        assignedPeakDlgStage.setHeight(assignedPeakDialog.getCellHeight()*(assignment.size()+1)+
-                assignedPeakDialog.tool.getHeight()+decorationHeight+5);
+        //assignedPeakDlgStage.setHeight(assignedPeakDialog.getCellHeight()*(assignment.size()+1)+
+        //        assignedPeakDialog.tool.getHeight()+decorationHeight+5);
     }
 
     public void assignPeak(double wght){

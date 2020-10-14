@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="344.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.ulille.spexp.fx.AssignedPeakDialogNew">
+<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="85.0" prefWidth="397.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.ulille.spexp.fx.AssignedPeakDialogNew">
    <children>
-      <ListView fx:id="listView" prefHeight="47.0" prefWidth="344.0" style="-fx-font-size: 10;" stylesheets="@listcell.css" VBox.vgrow="ALWAYS" />
-      <ToolBar fx:id="tool" prefHeight="25.0" prefWidth="342.0" style="-fx-padding: 1;" VBox.vgrow="ALWAYS">
+      <ListView id="alist" fx:id="listView" prefHeight="44.0" prefWidth="397.0" style="-fx-font-size: 10;" stylesheets="@listcell.css" VBox.vgrow="ALWAYS" />
+      <ToolBar fx:id="tool" prefHeight="28.0" prefWidth="395.0" style="-fx-padding: 1 1 1 3;">
         <items>
-          <Button mnemonicParsing="false" onAction="#addAssignment" text="+" textFill="#00ff37">
+          <Button mnemonicParsing="false" onAction="#addAssignment" text="+" textFill="#008000">
                <font>
-                  <Font size="10.0" />
+                  <Font name="System Bold" size="10.0" />
                </font>
             </Button>
             <Button mnemonicParsing="false" onAction="#deleteAssignment" prefWidth="21.0" text="x" textFill="RED">
@@ -24,7 +24,7 @@
             </Button>
         </items>
          <VBox.margin>
-            <Insets left="2.0" />
+            <Insets />
          </VBox.margin>
       </ToolBar>
    </children>

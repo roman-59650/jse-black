@@ -534,7 +534,7 @@ public class Spectrum extends SpectrumFile {
         }
     }
 
-    public double insertPeak(double frequency, Stage stage){
+    public int insertPeak(double frequency, Stage stage){
         MiscData misc = Main.mainfrm.getDatabase().getMiscData();
         double lwmult = Double.parseDouble(Main.getProperties().getProperty("lw multiplier"));
         double doppler = lwmult*3.58e-7*frequency*Math.sqrt(misc.getTemp()/misc.getMass());
@@ -557,13 +557,13 @@ public class Spectrum extends SpectrumFile {
             alert.setContentText(null);
             alert.initOwner(stage);
             alert.showAndWait();
-            return 0.;
+            return -1;
         }
 
         double fpeak = peakFitParabola(imin+maxpos);
         double fpos = xData[imin+maxpos];
         Main.mainfrm.getDatabase().insertValue(fpos, fpeak);
-        return fpos;
+        return 0;
     }
 
 }

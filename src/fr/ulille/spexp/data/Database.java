@@ -36,6 +36,8 @@ public class Database {
     private String dbName;
     private String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private String protocol = "jdbc:derby";
+    private String generatedColumns[] = { "ID" };
+    private String generatedPeakId[] = {"PR_ID"};
     private Connection conn;
     private Properties props;
 //*****************************
@@ -89,6 +91,13 @@ public class Database {
     private String deletePeak = "DELETE FROM APP.PEAK " +
                                 "WHERE ID = ?";
 
+    private String insertPredTransString;
+    private String insertPredPeakString = "INSERT INTO PRO.PRPEAKS " +
+            "(PR_FREQ, PR_AMPL, COLOR) " +
+            "VALUES (?, ?, ?)";
+    private String updatePredPeakString = "UPDATE PRO.PRPEAKS " +
+            "SET PR_FREQ = ?, PR_AMPL = ?, COLOR = ? WHERE PR_ID = ?";
+
 
     private List<String> aliasList;
     private List<String> qnumsList;
@@ -117,6 +126,10 @@ public class Database {
     private PreparedStatement updRelIntStatement;
     private PreparedStatement deleteRowStatement;
     private PreparedStatement deletePeakStatement;
+
+    private PreparedStatement insertPredTransStatement;
+    private PreparedStatement insertPredPeakStatement;
+    private PreparedStatement updatePredPeakStatement;
 //*****************************    
     /* Project datasets */
     private ResultSet globrs; // peaks
@@ -213,7 +226,7 @@ public class Database {
                 dbformat = getDbFormat();
             }
             // preparing statements
-            insertStatement = conn.prepareStatement(insertString);
+            insertStatement = conn.prepareStatement(insertString, generatedColumns);
             insertCompDataStatement = conn.prepareStatement(insertCompDataString);
             insertMiscDataStatement = conn.prepareStatement(insertMiscDataString);
             insertFilesDataStatement = conn.prepareStatement(insertFilesDataString);
@@ -251,6 +264,7 @@ public class Database {
                     + "VALUES (?, "
                     + strval
                     + "?, ?, ?)";
+
             insertSpStatement = conn.prepareStatement(insertSpString);
             insertPrStatement = conn.prepareStatement(insertPrString);
             assignSpStatement = conn.prepareStatement(assignSpString);
@@ -268,6 +282,18 @@ public class Database {
             getFileFreqStatetment = conn.prepareStatement(getFileFreqString,
                                              ResultSet.TYPE_SCROLL_INSENSITIVE,
                                              ResultSet.CONCUR_UPDATABLE);
+
+            insertPredTransString = "INSERT INTO PRO.PRTRANS "
+                    + "(PEAK_ID, SPECIES, "
+                    + strprep
+                    + "FREQ, ALPHA, COLOR) "
+                    + "VALUES (?, ?, "
+                    + strval
+                    + "?, ?, ?)";
+            //insertPredTransStatement = conn.prepareStatement(insertPredTransString);
+            //insertPredPeakStatement = conn.prepareStatement(insertPredPeakString, generatedPeakId);
+            //updatePredPeakStatement = conn.prepareStatement(updatePredPeakString);
+
             globrs = null;
             predrs = null;
             tranrs = null;
@@ -371,6 +397,7 @@ public class Database {
                 if (dbformat.getDataType(i)==DbFormat.qnDataType.StrData)
                     str = str+"VARCHAR(6), ";
             }
+
         String createIdsString = "CREATE TABLE APP.SPDATA "
                 + "(ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY"
                 + "(START WITH 1, INCREMENT BY 1), "
@@ -413,6 +440,23 @@ public class Database {
                 "MAXFREQ DOUBLE)";
         s.execute(createFilesString);
 
+            String createPeaksTable = "CREATE TABLE PRO.PRPEAKS "
+                    + "(PR_ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, "
+                    + "PR_FREQ DOUBLE, "
+                    + "PR_AMPL DOUBLE, "
+                    + "COLOR INT)";
+            s.execute(createPeaksTable);
+
+            String createPredictionsTable = "CREATE TABLE PRO.PRTRANS "
+                    + "(PEAK_ID INT, "
+                    + "SPECIES VARCHAR(20), "
+                    + str
+                    + "FREQ DOUBLE, "
+                    + "ALPHA DOUBLE, "
+                    + "COLOR INT, "
+                    + "FOREIGN KEY (PEAK_ID) REFERENCES PRO.PRPEAKS (PR_ID))";
+            s.execute(createPredictionsTable);
+
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -446,7 +490,8 @@ public class Database {
         }
     }
     
-    public void insertValue(double pvalue, double gvalue){
+    public int insertValue(double pvalue, double gvalue){
+        int id = -1;
         try {
             insertStatement.setDouble(1, pvalue);
             insertStatement.setDouble(2, gvalue);
@@ -454,9 +499,15 @@ public class Database {
             insertStatement.setBoolean(4, false);
             insertStatement.setString(5, "");
             insertStatement.executeUpdate();
+            ResultSet rs = insertStatement.getGeneratedKeys();
+            if (rs.next()){
+                id = rs.getInt(1);
+                //System.out.println(id);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return id;
     }
 
     public void insertSpValue(String field, Object value){
@@ -585,9 +636,15 @@ public class Database {
         String statement = "SELECT * FROM APP.SPDATA WHERE ";
         ResultSet res = null;
         for (int i=0;i<qnumsList.size()-1;i++) {
-            statement = statement + qnumsList.get(i) + "=" + transition.getQns(i) + " AND ";
+            Object val = transition.getQns(i);
+            if (transition.getQnType(i)== DbFormat.qnDataType.StrData)
+                val = "'"+val+"'";
+            statement = statement + qnumsList.get(i) + "=" + val + " AND ";
         }
-        statement = statement + qnumsList.get(qnumsList.size()-1) + "=" + transition.getQns(qnumsList.size()-1);
+        Object val = transition.getQns(qnumsList.size()-1);
+        if (transition.getQnType(qnumsList.size()-1)== DbFormat.qnDataType.StrData)
+            val = "'"+val+"'";
+        statement = statement + qnumsList.get(qnumsList.size()-1) + "=" + val;
         System.out.println(statement);
         Statement s = null;
         try {
@@ -1010,6 +1067,7 @@ public class Database {
                 rowstr = String.valueOf(row);
             }
             long startTime = System.nanoTime();
+            int id = 1;
             while (res.next()){
                 nfr = res.getDouble("FREQ");
                 if (nfr-tfr<unresolvedWidth){
@@ -1028,16 +1086,24 @@ public class Database {
                         insertPrStatement.setInt(4, rowcount);
                         insertPrStatement.setString(5, rowstr);
                         insertPrStatement.executeUpdate();
+
+                        //insertPredPeak(over/below,below,col/rowcount);
+
                         over = nfr*res.getDouble("ALPHA");
                         below = res.getDouble("ALPHA");
                         col = res.getInt("COLOR");
                         rowcount = 1;
                         row = res.getInt("ID");
                         rowstr = String.valueOf(row);
+
+                        id++;
                     }
                 }
                 tfr = nfr;
             }
+
+
+
             long elapsedTime = System.nanoTime() - startTime;
             System.out.println("Total execution time: "+ elapsedTime/1000000);
         } catch (SQLException ex) {
@@ -1290,6 +1356,24 @@ public class Database {
             e.printStackTrace();
         }
         return str;
+    }
+
+    public int insertPredPeak(double freq, double ampl, int color){
+        int id = -1;
+        try {
+            insertPredPeakStatement.setDouble(1, freq);
+            insertPredPeakStatement.setDouble(2, ampl);
+            insertPredPeakStatement.setInt(3, color);
+            insertPredPeakStatement.executeUpdate();
+            ResultSet rs = insertPredPeakStatement.getGeneratedKeys();
+            if (rs.next()){
+                id = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+
     }
 
 }

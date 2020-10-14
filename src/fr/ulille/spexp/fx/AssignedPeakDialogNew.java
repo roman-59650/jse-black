@@ -26,13 +26,13 @@ public class AssignedPeakDialogNew implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Text text = new Text();
+        /*Text text = new Text();
         text.setFont(Font.font("monospaced",12));
         text.setText("A");
         listView.getItems().add(text);
         double height = text.getBoundsInLocal().getHeight();
         cellHeight = height;
-        listView.getItems().clear();
+        listView.getItems().clear();*/
 
         //listView.prefHeightProperty().bind(Bindings.size(listView.getItems()).multiply(height).add(height));
         //vBox.prefHeightProperty().bind(listView.prefHeightProperty().add(tool.prefHeightProperty()));
@@ -58,7 +58,6 @@ public class AssignedPeakDialogNew implements Initializable {
     }
 
     public void deleteAssignment(ActionEvent e){
-
         spectrumPane.deleteAssignment();
         spectrumPane.updatePeaks();
         spectrumPane.showPeaks();

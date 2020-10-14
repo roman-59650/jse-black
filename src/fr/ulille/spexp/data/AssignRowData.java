@@ -35,7 +35,7 @@ public class AssignRowData extends PredictRowData {
         String str = "";
         if (format.getDataType(i) == DbFormat.qnDataType.IntData) str = "%3d";
         if (format.getDataType(i) == DbFormat.qnDataType.FloData) str = "%5.1f";
-        if (format.getDataType(i) == DbFormat.qnDataType.StrData) str = "";
+        if (format.getDataType(i) == DbFormat.qnDataType.StrData) str = "%s";
         return str;
     }
 
@@ -90,6 +90,35 @@ public class AssignRowData extends PredictRowData {
             }
             str += String.format(Locale.US,"%7d", 1);
             str += String.format(Locale.US,"%10.3f", wght);
+        }
+        if (outputFormat == 4){
+            str += String.format("%2d",qnums.get(0));
+            str += String.format("%4d",qnums.get(1));
+            str += String.format("%4d",qnums.get(2));
+            str += String.format("%4d",qnums.get(4));
+            str += String.format("%4d",qnums.get(5));
+            str += String.format("%4d",qnums.get(6));
+            str += String.format("%9d",qnums.get(3));
+            str += String.format("%4d",qnums.get(7));
+            str += String.format(Locale.US,"%16.6f ", freq/1e+3);
+        }
+        if (outputFormat == 5){
+            str += String.format(Locale.US,"%10.3f00 0", freq);
+            str += String.format("%4d",qnums.get(0));
+            str += String.format("%5d",qnums.get(1));
+            if (qnums.get(3).equals(1)) str+="  +";
+            else if (qnums.get(3).equals(-1)) str+="  -";
+            else str+="   ";
+            str += String.format("%3d  0",qnums.get(2));
+
+            str += String.format("%4d",qnums.get(5));
+            str += String.format("%5d",qnums.get(6));
+            if (qnums.get(8).equals(1)) str+="  +";
+            else if (qnums.get(8).equals(-1)) str+="  -";
+            else str+="   ";
+            str += String.format("%3d  1",qnums.get(7));
+            str += String.format("%7d", Math.round(1000*(wght+1)));
+            str += String.format("   %s",qnums.get(4));
         }
 
         return str;

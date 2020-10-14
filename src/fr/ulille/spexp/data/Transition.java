@@ -25,7 +25,13 @@ public class Transition {
     }
 
     public Object getQns(int idx){
-        return qnums.get(idx);
+        if (format.getDataType(idx) == DbFormat.qnDataType.StrData)
+            return String.format("%s",qnums.get(idx));
+        else return qnums.get(idx);
+    }
+
+    public DbFormat.qnDataType getQnType(int idx){
+        return format.getDataType(idx);
     }
 
     public boolean isEqual(Transition transition){

@@ -119,7 +119,6 @@ public class SpectrumPane extends Pane {
                 spectrum.getSelectedPeak().clearSelected();
                 showSpectrum();
             });
-            System.out.println(decorationHeight);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -281,6 +280,7 @@ public class SpectrumPane extends Pane {
                         }
                         else {
                             if (peakDlgStage.isShowing()) peakDlgStage.hide();
+                            if (assignedPeakDlgStage.isShowing()) assignedPeakDlgStage.hide();
                             setAssignedPeakDialog(me.getSceneX(), me.getSceneY());
                             int idx = rs.getInt("ID");
                             spectrum.getSelectedPeak().setFrequency(freq);
@@ -370,19 +370,19 @@ public class SpectrumPane extends Pane {
 
         double psx = cv1.getParent().getScene().getWindow().getX()+positionX;
         double psy = cv1.getParent().getScene().getWindow().getY()+positionY;
-        assignedPeakDlgStage.hide();
+
         assignedPeakDlgStage.setX(psx);
         assignedPeakDlgStage.setY(psy);
 
-        assignedPeakDialog.listView.getItems().clear();
+        ListView<Text> listView = (ListView) assignedPeakDlgStage.getScene().lookup("#alist");
+        listView.getItems().clear();
         for (Text t:assignment){
-            assignedPeakDialog.listView.getItems().add(t);
+            listView.getItems().add(t);
         }
-
+        assignedPeakDlgStage.setWidth(textwidth+20); // check what to do with +20
         assignedPeakDlgStage.show();
 
         //decorationHeight = assignedPeakDlgStage.getHeight()-assignedPeakDlgStage.getScene().getHeight();
-        assignedPeakDlgStage.setWidth(textwidth+20); // check what to do with +20
         //assignedPeakDlgStage.setHeight(assignedPeakDialog.getCellHeight()*(assignment.size()+1)+
         //        assignedPeakDialog.tool.getHeight()+decorationHeight+5);
     }
@@ -437,7 +437,6 @@ public class SpectrumPane extends Pane {
         for (AssignRowData adata: assignedList){
             PredictRowData row = db._findTransition(adata.getTransition());
             intens.add(row.getIntensity());
-            //System.out.println(row.getId());
         }
         double sum = 0;
         for (double a : intens) sum +=a;

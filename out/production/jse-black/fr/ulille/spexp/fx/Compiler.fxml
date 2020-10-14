@@ -19,13 +19,13 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.StatusBar?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.ulille.spexp.fx.Compiler">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.ulille.spexp.fx.Compiler">
    <children>
       <ToolBar layoutX="59.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
-            <Button graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveCompSettings" prefHeight="32.0" prefWidth="32.0">
+            <Button fx:id="button1" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveCompSettings" prefHeight="32.0" prefWidth="32.0">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0">
+                  <ImageView accessibleHelp="Save" accessibleText="Save" fitHeight="24.0" fitWidth="24.0">
                      <image>
                         <Image url="@../resources/icons/icons8-save-48.png" />
                      </image>
@@ -34,7 +34,7 @@
                <font>
                   <Font size="10.0" />
                </font></Button>
-            <Button contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#compileDbClick" prefHeight="32.0" prefWidth="32.0" textAlignment="CENTER">
+            <Button fx:id="button2" contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#compileDbClick" prefHeight="32.0" prefWidth="32.0" textAlignment="CENTER">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0">
                      <image>
@@ -46,7 +46,7 @@
                   <Font size="10.0" />
                </font></Button>
             <Separator orientation="VERTICAL" prefHeight="10.0" prefWidth="6.0" />
-            <Button fx:id="button" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onButtonClick" prefHeight="32.0" prefWidth="32.0">
+            <Button fx:id="button3" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onButtonClick" prefHeight="32.0" prefWidth="32.0">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0">
                      <image>
@@ -57,7 +57,7 @@
                      </viewport>
                   </ImageView>
                </graphic></Button>
-            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onButton2CLick" prefHeight="32.0" prefWidth="32.0">
+            <Button fx:id="button4" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onButton2CLick" prefHeight="32.0" prefWidth="32.0">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0">
                      <image>
@@ -65,7 +65,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
+            <Button fx:id="button5" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0">
                      <image>

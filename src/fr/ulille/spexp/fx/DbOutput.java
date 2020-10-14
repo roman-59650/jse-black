@@ -43,7 +43,7 @@ public class DbOutput implements Initializable {
                     formatCombo.getSelectionModel().getSelectedIndex());
         });
 
-        formatCombo.getItems().addAll("GENERIC", "ASFIT", "SPFIT", "RAM36");
+        formatCombo.getItems().addAll("GENERIC", "ASFIT", "SPFIT", "RAM36", "XIAM-Aachen", "BELGI-2T");
         formatCombo.getSelectionModel().selectFirst();
         formatCombo.valueProperty().addListener((ov, oldValue, newValue)->{
             if (!aliasCombo.getSelectionModel().isEmpty()){

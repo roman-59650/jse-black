@@ -6,9 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.Color;
@@ -37,6 +35,11 @@ public class Compiler implements Initializable {
     @FXML TextField tempData;
     @FXML TextField qfuncData;
     @FXML TextField icutoffData;
+    @FXML Button button1;
+    @FXML Button button2;
+    @FXML Button button3;
+    @FXML Button button4;
+    @FXML Button button5;
 
     private ObservableList<CompilationData> list = FXCollections.observableArrayList();
     private Database db;
@@ -123,5 +126,11 @@ public class Compiler implements Initializable {
         statusColumn.setCellFactory(statusColumn-> new CheckBoxTableCell());
 
         table.setEditable(true);
+
+        button1.setTooltip(new Tooltip("Save configuration"));
+        button2.setTooltip(new Tooltip("Compile database"));
+        button3.setTooltip(new Tooltip("Add file"));
+        button4.setTooltip(new Tooltip("Remove file"));
+        button5.setTooltip(new Tooltip("Clear table"));
     }
 }

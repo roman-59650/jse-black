@@ -116,6 +116,10 @@ public class DbCompiler extends Task {
                     RAM36HFCompile(fileName, species, color, iscale);
                 if (fileName.endsWith(".ikf"))
                     IKCompile(species, color, iscale);
+                if (fileName.endsWith(".xia"))
+                    XIACompile(species, color, iscale);
+                if (fileName.endsWith(".b2t"))
+                    B2TCompile(species, color, iscale);
             }
         }
         updateMessage("Merging...");
@@ -177,50 +181,136 @@ public class DbCompiler extends Task {
         }
     }
 
-    private void IKCompile(String species, int color, double iscale){
+    private void XIACompile(String species, int color, double iscale){
         double T = misc.getTemp();
         double Qrs = misc.getQfunc();
-
-/*        int i = 0;
+        double Bx = 0;
+        double By = 0;
+        double Bz = 0;
+        int start = 0;
+        int stop = 0;
         for (String s:strlist){
-            String[] ss = s.split("\\s+");
-            if (ss.length==22){
-                System.out.println(s);
-                double elo = Double.parseDouble(ss[17]);
-                double eup = Double.parseDouble(ss[18]);
-                if (elo>eup){
-                    double a = eup;
-                    eup=elo;
-                    elo=a;
-                }
-                double sm2 = Double.parseDouble(ss[19]);
-                double g = Double.parseDouble(ss[21]);
-                double f = Double.parseDouble(ss[13].substring(0,ss[13].length()-2));
-                if (f<1.) continue;
-                double its = 4.16231e-05*f*sm2*(Math.exp(-1.438*elo/T)-Math.exp(-1.438*eup/T))*g/Qrs;
+            if (s.trim().equals("Prediction")) start = strlist.indexOf(s)+3;
+            if (s.trim().equals("Transitions")) stop = strlist.indexOf(s)-1;
+            if (s.startsWith("Bz")){
+                String[] ss = s.trim().split("\\s+");
+                Bz = Double.parseDouble(ss[1])*1e+3;
+            }
+            if (s.startsWith("Bx")){
+                String[] ss = s.trim().split("\\s+");
+                Bx = Double.parseDouble(ss[1])*1e+3;
+            }
+            if (s.startsWith("Bx")){
+                String[] ss = s.trim().split("\\s+");
+                By = Double.parseDouble(ss[1])*1e+3;
+            }
+        }
+        if (stop==0) stop = strlist.size()-1;
+
+        for (int i=start;i<stop;i++){
+            if (strlist.get(i).isEmpty()) continue;
+            String[] ss = strlist.get(i).trim().split("\\s+");
+
+            if (ss.length>11) {
+                int j1 = Integer.parseInt(ss[3]);
+                int ka1 = Integer.parseInt(ss[4]);
+                double s = Double.parseDouble(ss[9]);
+                double rel = Double.parseDouble(ss[10]);
+
+                double sm2 = s*rel;
+                double f = Double.parseDouble(ss[8])*1e+3;
+                double elo = (0.5*(Bx+By)*j1*(j1+1)+(Bz-0.5*(Bx+By))*ka1*ka1)/29979.2458;
+                double eup = elo+f/29979.2458;
+                double its = 4.16231e-05*f*sm2*(Math.exp(-1.438*elo/T)-Math.exp(-1.438*eup/T))/Qrs;
                 if (its*iscale<misc.getIcutoff()) continue;
                 rowdata.setFrequency(f);
                 rowdata.setIntensity(its*iscale);
                 rowdata.setColor(color);
 
-                rowdata.setQns(0, Integer.parseInt(ss[1]));
-                rowdata.setQns(1, Integer.parseInt(ss[2]));
-                rowdata.setQns(2, Integer.parseInt(ss[3]));
-                rowdata.setQns(3, Integer.parseInt(ss[4]));
-                rowdata.setQns(4, ss[5]);
+                rowdata.setQns(0, Integer.parseInt(ss[0]));
+                rowdata.setQns(1, Integer.parseInt(ss[1]));
+                rowdata.setQns(2, Integer.parseInt(ss[2]));
+                rowdata.setQns(3, Integer.parseInt(ss[6]));
 
-                rowdata.setQns(5, Integer.parseInt(ss[6]));
-                rowdata.setQns(6, Integer.parseInt(ss[7]));
-                rowdata.setQns(7, Integer.parseInt(ss[8]));
-                rowdata.setQns(8, Integer.parseInt(ss[9]));
-                rowdata.setQns(9, ss[10]);
+                rowdata.setQns(4, Integer.parseInt(ss[3]));
+                rowdata.setQns(5, Integer.parseInt(ss[4]));
+                rowdata.setQns(6, Integer.parseInt(ss[5]));
+                rowdata.setQns(7, Integer.parseInt(ss[7]));
+
                 rowdata.setSpecies(species);
                 db.insertPDataRow(rowdata);
-                //System.out.println(i+ " "+f);
+                updateProgress(i, progressSize);
             }
-            i++;
-            updateProgress(i, progressSize);
-        }*/
+        }
+
+    }
+
+    private void B2TCompile(String species, int color, double iscale){
+        double T = misc.getTemp();
+        double Qrs = misc.getQfunc();
+
+        int start = 0;
+        int stop = 0;
+        for (String s : strlist){
+            if (s.trim().startsWith("VT J KA")) start = strlist.indexOf(s)+1;
+            if (s.trim().startsWith("STD.DEV.(UNITLESS)")) stop = strlist.indexOf(s)-1;
+        }
+
+        for (int i=start;i<stop;i++){
+            String s = strlist.get(i);
+
+            int v2 = Integer.parseInt(s.substring(0,4).trim());
+            int j2 = Integer.parseInt(s.substring(4,8).trim());
+            int ka2 = Integer.parseInt(s.substring(8,12).trim());
+            int kc2 = Integer.parseInt(s.substring(12,16).trim());
+
+            int v1 = Integer.parseInt(s.substring(18,22).trim());
+            int j1 = Integer.parseInt(s.substring(22,26).trim());
+            int ka1 = Integer.parseInt(s.substring(26,30).trim());
+            int kc1 = Integer.parseInt(s.substring(30,34).trim());
+
+            double f = Double.parseDouble(s.substring(56,67).trim());
+            double sm2 = Double.parseDouble(s.substring(87,98).trim());
+            double eup = Double.parseDouble(s.substring(99,108).trim());
+            double elo = Double.parseDouble(s.substring(109,118).trim());
+
+            String par2 = s.substring(17,18);
+            String par1 = s.substring(35,36);
+            String sym2 = s.substring(119,121);
+            String sym1 = sym2;
+            if (f>0&&v2==0&&v1==0) {
+                double its = 4.16231e-05*f*sm2*(Math.exp(-1.438*elo/T)-Math.exp(-1.438*eup/T))/Qrs;
+                if (its*iscale<misc.getIcutoff()) continue;
+                rowdata.setFrequency(f);
+                rowdata.setIntensity(its*iscale);
+                rowdata.setColor(color);
+
+                rowdata.setQns(0, j2);
+                rowdata.setQns(1, ka2);
+                rowdata.setQns(2, kc2);
+                if (par2.trim().isEmpty()) rowdata.setQns(3, 0);
+                else if (par2.equals("+")) rowdata.setQns(3, 1);
+                else rowdata.setQns(3, -1);
+                rowdata.setQns(4, sym2);
+
+                rowdata.setQns(5, j1);
+                rowdata.setQns(6, ka1);
+                rowdata.setQns(7, kc1);
+                if (par1.trim().isEmpty()) rowdata.setQns(8, 0);
+                else if (par1.equals("+")) rowdata.setQns(8, 1);
+                else rowdata.setQns(8, -1);
+                rowdata.setQns(9, sym1);
+                rowdata.setSpecies(species);
+                db.insertPDataRow(rowdata);
+                updateProgress(i, progressSize);
+            }
+        }
+
+    }
+
+    private void IKCompile(String species, int color, double iscale){
+        double T = misc.getTemp();
+        double Qrs = misc.getQfunc();
 
         int omit = 0;
         for (int i=0;i<strlist.size()-1;i++){

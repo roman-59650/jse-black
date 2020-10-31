@@ -264,7 +264,7 @@ public class MainController implements Initializable {
             outputStage.initStyle(StageStyle.UTILITY);
             outputStage.setTitle("Database Output");
             outputStage.setResizable(false);
-            outputStage.setAlwaysOnTop(true);
+            outputStage.setAlwaysOnTop(false);
 
             outputStage.setOnShowing(windowEvent -> {
                 dbOutput.setAliases(db.getAliasList());

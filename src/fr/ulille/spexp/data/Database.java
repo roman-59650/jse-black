@@ -360,6 +360,11 @@ public class Database {
 
     private void createTables(){
         try {
+            String createSpectraString = "CREATE TABLE APP.SPECTRA " +
+                    "(X FLOAT, Y FLOAT)";
+            java.sql.Statement s = conn.createStatement();
+            s.execute(createSpectraString);
+
             String createCompString = "CREATE TABLE APP.COMPDATA "
                     +"(ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY "
                     + "(START WITH 1, INCREMENT BY 1), "
@@ -367,7 +372,7 @@ public class Database {
                     + "ALIAS VARCHAR(32), "
                     + "INTENSITY DOUBLE, "
                     + "COLOR INT)";
-            java.sql.Statement s = conn.createStatement();
+
             s.execute(createCompString);
 
         String createDbfString = "CREATE TABLE APP.DBFORMAT "
@@ -398,7 +403,7 @@ public class Database {
                     str = str+"VARCHAR(6), ";
             }
 
-        String createIdsString = "CREATE TABLE APP.SPDATA "
+            String createIdsString = "CREATE TABLE APP.SPDATA "
                 + "(ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY"
                 + "(START WITH 1, INCREMENT BY 1), "
                 + "SPECIES VARCHAR(20), "
@@ -406,17 +411,17 @@ public class Database {
                 + "FREQ DOUBLE, "
                 + "ALPHA DOUBLE, "
                 + "COLOR INT)";
-        s.execute(createIdsString);
+            s.execute(createIdsString);
 
-        String createPdsString = "CREATE TABLE APP.PRDATA "
+            String createPdsString = "CREATE TABLE APP.PRDATA "
                 + "(CFREQ DOUBLE, "
                 + "AMAX DOUBLE, "
                 + "COLOR INT, "
                 + "NLINES INT, "
                 + "REFS VARCHAR(512))";
-        s.execute(createPdsString);
+            s.execute(createPdsString);
 
-        String createOdsString = "CREATE TABLE APP.AODATA "
+            String createOdsString = "CREATE TABLE APP.AODATA "
                 + "(ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, "
                 + "SPECIES VARCHAR(30), "
                 + str
@@ -424,21 +429,21 @@ public class Database {
                 + "WEIGHT DOUBLE, "
                 + "INTENS DOUBLE, "
                 + "COMMENT VARCHAR(30))";
-        s.execute(createOdsString);
+            s.execute(createOdsString);
 
-        String creatMiscString = "CREATE TABLE APP.MISC "+
+            String creatMiscString = "CREATE TABLE APP.MISC "+
                 "(SPPATH VARCHAR(256), "+
                 "TEMP DOUBLE, "+
                 "MASS DOUBLE, "+
                 "QFUNC DOUBLE, " +
                 "ICOFF DOUBLE)";
-        s.execute(creatMiscString);
+            s.execute(creatMiscString);
 
-        String createFilesString = "CREATE TABLE APP.FILES "+
+            String createFilesString = "CREATE TABLE APP.FILES "+
                 "(FILENAME VARCHAR(256), " +
                 "MINFREQ DOUBLE, " +
                 "MAXFREQ DOUBLE)";
-        s.execute(createFilesString);
+            s.execute(createFilesString);
 
             String createPeaksTable = "CREATE TABLE PRO.PRPEAKS "
                     + "(PR_ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, "

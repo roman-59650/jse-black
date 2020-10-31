@@ -328,7 +328,7 @@ public class DbCompiler extends Task {
                 System.out.println(i);
                 break;
             }
-            if (!str.substring(122,130).trim().isEmpty()) continue;   // skip assigned transitions
+            //if (!str.substring(122,130).trim().isEmpty()) continue;   // skip assigned transitions
 
             double elo = Double.parseDouble(str.substring(112,121));
             double eup = Double.parseDouble(str.substring(102,111));
